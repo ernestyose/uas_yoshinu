@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNESA Parkir</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #004AAD; /* Biru gelap/cobalt blue */
+            --secondary: #C9E7FF; /* Light azure */
+            --accent: #FFFDF3; /* Light yellow */
+            --light: #FFFFFF;
+            --dark: #1A2B4A;
+            --gold: #FFD700; /* Warna emas untuk aksen */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--accent);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 12px;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold);
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background-color: white;
+            margin-bottom: 4px;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Main content */
+        main {
+            position: relative;
+            min-height: calc(100vh - 140px);
+            overflow: hidden;
+        }
+
+        .pages-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 300%;
+        }
+
+        .page {
+            width: 33.333%;
+            padding: 2rem 0;
+            min-height: calc(100vh - 140px);
+        }
+
+        /* Page styles */
+        .page-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        .card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Home page */
+        .hero {
+            position: relative;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 75, 173, 0.214), rgba(0, 75, 173, 0.575));
+            z-index: 1;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.unesa.ac.id/images/foto-03-01-2024-12-49-41-251.png');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-large {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-large img {
+            height: 100px;
+            margin-right: 20px;
+        }
+
+        .logo-large .logo-text {
+            text-align: left;
+        }
+
+        .logo-large h2 {
+            font-size: 3rem;
+            color: white;
+            margin: 0;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .logo-large .subtitle {
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .tagline {
+            font-style: italic;
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-top: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Services section */
+        .services {
+            margin-top: 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Location Gallery Styles */
+        .location-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .faculty-card {
+            background-color: var(--light);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .faculty-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .faculty-image-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .faculty-image, .parking-map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .parking-map {
+            opacity: 0;
+            transform: scale(1.1);
+        }
+
+        .faculty-card:hover .faculty-image {
+            opacity: 0;
+            transform: scale(1.1);
+        }
+
+        .faculty-card:hover .parking-map {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .faculty-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .faculty-name {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .faculty-description {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .view-map-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 2px solid var(--primary);
+            margin: 0.2rem;
+        }
+
+        .view-map-btn:hover {
+            background-color: transparent;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+            transform: rotate(90deg);
+        }
+
+        .modal-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+        }
+
+        /* Report page */
+        .report-options {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .report-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--secondary);
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            flex: 1;
+            min-width: 200px;
+            color: var(--primary);
+        }
+
+        .report-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .report-btn:hover:not(.active) {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .report-form {
+            display: none;
+        }
+
+        .report-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-template {
+            background-color: var(--secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .form-template h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .form-template p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .form-template ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-template li {
+            margin-bottom: 0.5rem;
+        }
+
+        .email-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .email-link:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                width: 100%;
+                display: none;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 0;
+                width: 100%;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 0.75rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .report-options {
+                flex-direction: column;
+            }
+
+            .location-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .logo-large {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo-large img {
+                margin-right: 0;
+                margin-bottom: 15px;
+                height: 80px;
+            }
+
+            .logo-large h2 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+      <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+    <img src="logo_parkir.jpg" alt="UNESA Parkir Logo">
+                UNESA <span>Parkir</span>            
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#" class="nav-link" data-page="0">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="1">Location</a></li>
+                    <li><a href="#" class="nav-link" data-page="2">Report</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+       <main>
+        <div class="pages-container" id="pages-container">
+            <!-- Home Page -->
+            <section class="page" id="home">
+                <div class="container">
+                    <div class="hero">
+                        <div class="hero-bg"></div>
+                        <div class="hero-content">
+                            <div class="logo-large">
+                                <img src="logo_parkir.jpg" alt="UNESA Parkir Logo">
+                                <div class="logo-text">
+                                    <h2>UNESA PARKIR</h2>
+                                    <div class="subtitle">Sistem Parkir Universitas Negeri Surabaya</div>
+                                </div>
+                            </div>
+                            <h1>Memudahkan Pengelolaan<br>Parkir di Kampus UNESA</h1>
+                        </div>
+                    </div>
+                    
+                    <div class="services">
+                        <h2 class="page-title">Layanan Kami</h2>
+                        
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <div class="service-icon">🚗</div>
+                                <h3>Parkir Aman</h3>
+                                <p>Fasilitas parkir yang aman dan terjamin dengan sistem keamanan 24 jam.</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon">📝</div>
+                                <h3>Laporan Cepat</h3>
+                                <p>Sistem pelaporan yang cepat dan responsif untuk masalah parkir.</p>
+                            </div>
+                            <div class="service-card">
+                                <div class="service-icon">📢</div>
+                                <h3>Informasi Terkini</h3>
+                                <p>Update informasi terkini tentang kondisi parkir di kampus UNESA.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location Page - DITAMBAHKAN FITUR DENAH DENGAN GAMBAR -->
+            <section class="page" id="location">
+                <div class="container">
+                    <h1 class="page-title">Lokasi Parkir</h1>
+                    <p style="text-align: center; margin-bottom: 2rem;">Lokasi parkir di UNESA yang tersedia</p>
+                    
+                    <div class="location-gallery">
+                        <!-- FEB Card -->
+                        <div class="faculty-card" data-faculty="feb">
+                            <div class="faculty-image-container">
+                                <div class="faculty-image" style="background: linear-gradient(135deg, var(--primary), #0066cc); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 1rem;">
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; text-align: center;">FAKULTAS EKONOMIKA DAN BISNIS</h3>
+                                    <p>UNIVERSITAS NEGERI SURABAYA</p>
+                                </div>
+                                <div class="parking-map" style="background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center;">
+                                    <img src="c:\Users\Lenovo\Downloads\feb unesa.jpg" alt="Denah Parkir FEB" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            </div>
+                            <div class="faculty-info">
+                                <h3 class="faculty-name">Fakultas Ekonomika dan Bisnis</h3>
+                                <p class="faculty-description">Lokasi parkir di sekitar Fakultas Ekonomika dan Bisnis UNESA</p>
+                                <a href="https://maps.app.goo.gl/VQgsf3mxgn1J791R9?g_st=aw" target="_blank" class="view-map-btn">
+                                    📍 Buka di Google Maps
+                                </a>
+                                <button class="view-map-btn" onclick="openModal('feb')" style="background-color: var(--gold); border-color: var(--gold); color: var(--primary);">
+                                    🗺️ Lihat Denah
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- FISIPOL Card -->
+                        <div class="faculty-card" data-faculty="fisipol">
+                            <div class="faculty-image-container">
+                                <div class="faculty-image" style="background: linear-gradient(135deg, #cc0000, #aa0000); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 1rem;">
+                                    <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; text-align: center;">FAKULTAS ILMU SOSIAL DAN POLITIK</h3>
+                                    <p>UNIVERSITAS NEGERI SURABAYA</p>
+                                </div>
+                                <div class="parking-map" style="background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem; text-align: center;">
+                                    <img src="c:\Users\Lenovo\Downloads\fisipol unesa.png" alt="Denah Parkir FISIPOL" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            </div>
+                            <div class="faculty-info">
+                                <h3 class="faculty-name">Fakultas Ilmu Sosial dan Politik</h3>
+                                <p class="faculty-description">Lokasi parkir di sekitar Fakultas Ilmu Sosial dan Politik UNESA</p>
+                                <a href="https://maps.app.goo.gl/nPAsNbEQdmrfps4W6?g_st=aw" target="_blank" class="view-map-btn">
+                                    📍 Buka di Google Maps
+                                </a>
+                                <button class="view-map-btn" onclick="openModal('fisipol')" style="background-color: var(--gold); border-color: var(--gold); color: var(--primary);">
+                                    🗺️ Lihat Denah
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Report Page - TIDAK DIUBAH -->
+            <section class="page" id="report">
+                <div class="container">
+                    <h1 class="page-title">Laporan</h1>
+                    
+                    <div class="report-options">
+                        <button class="report-btn active" data-form="lost">Lost & Found</button>
+                        <button class="report-btn" data-form="parking">Parkir Report</button>
+                    </div>
+                    
+                    <!-- Lost & Found Template -->
+                    <div class="report-form active" id="lost-form">
+                        <div class="card">
+                            <h2 class="card-title">Lost & Found</h2>
+                            <p>Template untuk melaporkan barang hilang atau temuan barang di area parkir UNESA</p>
+                            
+                            <div class="form-template">
+                                <h3>📋 Template Laporan Lost & Found</h3>
+                                <p>Silakan salin template di bawah ini, isi dengan informasi yang sesuai, dan kirim ke email kami:</p>
+                                
+                                <div style="background: white; padding: 1.5rem; border-radius: 5px; border: 1px solid #ddd; margin: 1rem 0;">
+                                    <p><strong>Subjek:</strong> Laporan Lost & Found - UNESA Parkir</p>
+                                    <p><strong>Isi Email:</strong></p>
+                                    <p>
+                                        Kepada,<br>
+                                        Tim UNESA Parkir<br><br>
+                                        
+                                        Saya ingin melaporkan:<br>
+                                        - Jenis Laporan: [Kehilangan Barang / Penemuan Barang]<br>
+                                        - Barang: [Jenis barang, contoh: Dompet, Kunci, Helm, dll.]<br>
+                                        - Tanggal: [Tanggal kejadian]<br>
+                                        - Lokasi: [Parkir FEB / Parkir FISIPOL]<br>
+                                        - Deskripsi Barang: [Jelaskan ciri-ciri barang, warna, merk, dll.]<br>
+                                        - Kontak: [Nomor telepon atau email yang dapat dihubungi]<br><br>
+                                        
+                                        Terima kasih,<br>
+                                        [Nama Anda]
+                                    </p>
+                                </div>
+                                
+                                <a href="mailto:unesaparkir@gmail.com?subject=Laporan Lost & Found - UNESA Parkir&body=Kepada,%0ATim UNESA Parkir%0A%0ASaya ingin melaporkan:%0A- Jenis Laporan: [Kehilangan Barang / Penemuan Barang]%0A- Barang: [Jenis barang]%0A- Tanggal: [Tanggal kejadian]%0A- Lokasi: [Parkir FEB / Parkir FISIPOL]%0A- Deskripsi Barang: [Jelaskan ciri-ciri barang]%0A- Kontak: [Nomor telepon atau email]%0A%0ATerima kasih,%0A[Nama Anda]" class="email-link">
+                                    📧 Kirim Laporan via Email
+                                </a>
+                                <button class="btn" onclick="copyTemplate('lost')" style="margin-left: 10px;">📋 Salin Template</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Parking Report Template -->
+                    <div class="report-form" id="parking-form">
+                        <div class="card">
+                            <h2 class="card-title">Parkir Report</h2>
+                            <p>Template untuk melaporkan masalah parkir atau pelanggaran di area UNESA</p>
+                            
+                            <div class="form-template">
+                                <h3>📋 Template Laporan Parkir</h3>
+                                <p>Silakan salin template di bawah ini, isi dengan informasi yang sesuai, dan kirim ke email kami:</p>
+                                
+                                <div style="background: white; padding: 1.5rem; border-radius: 5px; border: 1px solid #ddd; margin: 1rem 0;">
+                                    <p><strong>Subjek:</strong> Laporan Parkir - UNESA Parkir</p>
+                                    <p><strong>Isi Email:</strong></p>
+                                    <p>
+                                        Kepada,<br>
+                                        Tim UNESA Parkir<br><br>
+                                        
+                                        Saya ingin melaporkan masalah parkir:<br>
+                                        - Lokasi Parkir: [Parkir FEB / Parkir FISIPOL]<br>
+                                        - Jenis Masalah: [Parkir Sembarangan / Kendaraan Menghambat / Fasilitas Rusak / Lainnya]<br>
+                                        - Jenis Kendaraan: [Motor / Mobil / Lainnya]<br>
+                                        - Tanggal & Waktu Kejadian: [Tanggal dan waktu kejadian]<br>
+                                        - Deskripsi Lengkap: [Jelaskan detail kejadian, plat nomor (jika diketahui), dll.]<br>
+                                        - Kontak Pelapor: [Nomor telepon atau email - opsional]<br><br>
+                                        
+                                        Terima kasih,<br>
+                                        [Nama Anda]
+                                    </p>
+                                </div>
+                                
+                                <a href="mailto:unesaparkir@gmail.com?subject=Laporan Parkir - UNESA Parkir&body=Kepada ,%0ATim UNESA Parkir%0A%0ASaya ingin melaporkan masalah parkir:%0A- Lokasi Parkir: [Parkir FEB / Parkir FISIPOL]%0A- Jenis Masalah: [Parkir Sembarangan / Kendaraan Menghambat / Fasilitas Rusak / Lainnya]%0A- Jenis Kendaraan: [Motor / Mobil / Lainnya]%0A- Tanggal & Waktu Kejadian: [Tanggal dan waktu kejadian]%0A- Deskripsi Lengkap: [Jelaskan detail kejadian]%0A- Kontak Pelapor: [Nomor telepon atau email - opsional]%0A%0ATerima kasih,%0A[Nama Anda]" class="email-link">
+                                    📧 Kirim Laporan via Email
+                                </a>
+                                <button class="btn" onclick="copyTemplate('parking')" style="margin-left: 10px;">📋 Salin Template</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal untuk denah parkir -->
+    <div class="modal" id="parkingModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalImage" class="modal-image">
+                <!-- Content will be inserted by JavaScript -->
+            </div>
+            <div class="modal-caption">
+                <h3 id="modalCaption">Denah Parkir</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <a href="#" class="logo">
+                <img src="logo_parkir.jpg" alt="UNESA Parkir Logo">
+                UNESA <span>Parkir</span>
+            </a>
+            
+            <div class="footer-links">
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat & Ketentuan</a>
+                <a href="mailto:unesaparkir@gmail.com">Kontak</a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 UNESA Parkir. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenu.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Page navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pagesContainer = document.getElementById('pages-container');
+        let currentPage = 0;
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active nav link
+                navLinks.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get target page index
+                const targetPage = parseInt(this.getAttribute('data-page'));
+                
+                // Calculate transform value
+                const transformValue = -targetPage * 100 / 3;
+                
+                // Apply transform with animation
+                pagesContainer.style.transform = `translateX(${transformValue}%)`;
+                
+                // Update current page
+                currentPage = targetPage;
+                
+                // Close mobile menu if open
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Report form toggle
+        const reportBtns = document.querySelectorAll('.report-btn');
+        const reportForms = document.querySelectorAll('.report-form');
+
+        reportBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active button
+                reportBtns.forEach(item => item.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get target form
+                const targetForm = this.getAttribute('data-form');
+                
+                // Show target form, hide others
+                reportForms.forEach(form => {
+                    if (form.id === `${targetForm}-form`) {
+                        form.classList.add('active');
+                    } else {
+                        form.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Copy template to clipboard function
+        function copyTemplate(templateType) {
+            let templateText = '';
+            
+            if (templateType === 'lost') {
+                templateText = `Kepada,
+Admin UNESA Parkir
+
+Saya ingin melaporkan:
+- Jenis Laporan: [Kehilangan Barang / Penemuan Barang]
+- Barang: [Jenis barang, contoh: Dompet, Kunci, Helm, dll.]
+- Tanggal: [Tanggal kejadian]
+- Lokasi: [Parkir FEB / Parkir FISIPOL]
+- Deskripsi Barang: [Jelaskan ciri-ciri barang, warna, merk, dll.]
+- Kontak: [Nomor telepon atau email yang dapat dihubungi]
+
+Terima kasih,
+[Nama Anda]`;
+            } else {
+                templateText = `Kepada,
+Admin UNESA Parkir
+
+Saya ingin melaporkan masalah parkir:
+- Lokasi Parkir: [Parkir FEB / Parkir FISIPOL]
+- Jenis Masalah: [Parkir Sembarangan / Kendaraan Menghambat / Fasilitas Rusak / Lainnya]
+- Jenis Kendaraan: [Motor / Mobil / Lainnya]
+- Tanggal & Waktu Kejadian: [Tanggal dan waktu kejadian]
+- Deskripsi Lengkap: [Jelaskan detail kejadian, plat nomor (jika diketahui), dll.]
+- Kontak Pelapor: [Nomor telepon atau email - opsional]
+
+Terima kasih,
+[Nama Anda]`;
+            }
+            
+            navigator.clipboard.writeText(templateText).then(function() {
+                alert('Template berhasil disalin! Silakan tempel di email Anda.');
+            }, function(err) {
+                console.error('Gagal menyalin template: ', err);
+                alert('Gagal menyalin template. Silakan salin manual dari halaman ini.');
+            });
+        }
+
+        // Modal functions for parking maps - MENGGUNAKAN GAMBAR DENAH
+        function openModal(faculty) {
+            const modal = document.getElementById('parkingModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            // Clear previous content
+            modalImage.innerHTML = '';
+            
+            if (faculty === 'feb') {
+                modalCaption.textContent = 'Denah Parkir FEB - Fakultas Ekonomika dan Bisnis';
+                modalImage.innerHTML = `
+                    <div style="padding: 1rem; background: white; display: flex; justify-content: center; align-items: center;">
+                        <img src="c:\\Users\\Lenovo\\Downloads\\denah parkir feb.png" alt="Denah Parkir FEB" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+                    </div>
+                `;
+            } else if (faculty === 'fisipol') {
+                modalCaption.textContent = 'Denah Parkir FISIPOL - Fakultas Ilmu Sosial dan Politik';
+                modalImage.innerHTML = `
+                    <div style="padding: 1rem; background: white; display: flex; justify-content: center; align-items: center;">
+                        <img src="c:\\Users\\Lenovo\\Downloads\\denah parkir fisipol.png" alt="Denah Parkir FISIPOL" style="max-width: 100%; max-height: 70vh; object-fit: contain;">
+                    </div>
+                `;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('parkingModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the image
+        document.getElementById('parkingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
